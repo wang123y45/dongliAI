@@ -1,0 +1,27 @@
+{
+  "name": "dongli-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "冻梨AI 桌面客户端：把网页工作台变成 Windows / macOS / Linux 上可长期驻留的桌面应用。",
+  "author": {
+    "name": "Dongli AI",
+    "email": "support@jhcmzy.top"
+  },
+  "license": "MIT",
+  "main": "electron/main.js",
+  "homepage": "https://www.jhcmzy.top/dongli/",
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis",
+    "dist:mac": "electron-builder --mac dmg zip",
+    "dist:linux": "electron-builder --linux AppImage deb",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "devDependencies": {
+    "electron": "^45.4.1",
+    "electron-builder": "^26.18.0"
+  }
+}

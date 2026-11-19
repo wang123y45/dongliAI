@@ -1,0 +1,40 @@
+# dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# build output
+desktop/dist/
+desktop/dist-mac/
+desktop/build/
+web/public/download/
+
+# runtime data (users, sessions, keys, admin password)
+web/data/
+data/
+*.local
+
+# secrets and signing material
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+*.cer
+.env
+.env.*
+secrets.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Xcode
+ios/**/xcuserdata/
+ios/**/*.xcuserstate
+ios/build/
+DerivedData/

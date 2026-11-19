@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>冻梨AI · 连接失败</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      color: #142134;
+      background:
+        radial-gradient(900px 600px at 8% -10%, #dff4ff 0, transparent 60%),
+        radial-gradient(760px 520px at 100% 20%, #e9edff 0, transparent 58%),
+        #f5f8fc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .card {
+      width: min(520px, calc(100vw - 48px));
+      padding: 34px 34px 30px;
+      border: 1px solid #e0e8f2;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 28px 70px rgba(30, 57, 93, .12);
+      text-align: center;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+    .brand img { width: 48px; height: 48px; border-radius: 14px; }
+    .brand b { font-size: 17px; letter-spacing: .02em; }
+    .brand span { display: block; font-size: 10px; color: #8a97a8; letter-spacing: .16em; margin-top: 2px; }
+    h1 { margin: 0 0 10px; font-size: 24px; letter-spacing: -.02em; }
+    p { margin: 0 auto 24px; color: #68778a; font-size: 14px; line-height: 1.8; max-width: 410px; }
+    .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    button {
+      appearance: none; border: 0; border-radius: 12px; padding: 0 20px; height: 42px;
+      font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .primary { background: #2f5cf6; color: #fff; box-shadow: 0 8px 20px rgba(47, 92, 246, .28); }
+    .secondary { background: #edf1f7; color: #31425a; }
+    details { margin-top: 22px; color: #a0aaba; font-size: 11px; text-align: left; }
+    details summary { cursor: pointer; }
+    code { display: block; margin-top: 8px; padding: 10px; border-radius: 10px; background: #f0f4f9; color: #63738a; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">
+      <img src="error-icon.png" alt="">
+      <div style="text-align:left"><b>冻梨AI</b><span>DONGLI AI · WORKSPACE</span></div>
+    </div>
+    <h1>暂时连不上工作台</h1>
+    <p>桌面端依赖冻梨AI 线上服务。请检查网络、代理或服务器状态，然后重新连接。</p>
+    <div class="actions">
+      <button class="primary" id="retry">重新连接</button>
+      <button class="secondary" id="web">打开网页版</button>
+    </div>
+    <details>
+      <summary>技术详情</summary>
+      <code id="detail"></code>
+    </details>
+  </main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const target = params.get('url') || 'https://www.jhcmzy.top/dongli/';
+    const code = params.get('code') || '';
+    const description = params.get('description') || '';
+    document.getElementById('detail').textContent = [code, description, target].filter(Boolean).join(' · ');
+
+    document.getElementById('retry').addEventListener('click', () => {
+      if (window.desktop?.retry) window.desktop.retry();
+      else location.href = target;
+    });
+    document.getElementById('web').addEventListener('click', () => {
+      if (window.desktop?.openExternal) window.desktop.openExternal(target);
+      else location.href = target;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+appId: top.jhcmzy.dongli
+productName: 冻梨AI
+copyright: Copyright © 2026 冻梨AI
+directories:
+  output: dist
+  buildResources: build
+files:
+  - electron/**/*
+  - package.json
+extraResources:
+  - from: build/icon.png
+    to: icon.png
+asar: true
+compression: maximum
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: dongli-ai-${version}-${arch}-setup.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 冻梨AI
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  runAfterFinish: true
+mac:
+  icon: build/icon.icns
+  category: public.app-category.productivity
+  target:
+    - target: dmg
+      arch:
+        - universal
+    - target: zip
+      arch:
+        - universal
+  artifactName: dongli-ai-${version}-${arch}.${ext}
+linux:
+  icon: build/icon.png
+  category: Office
+  maintainer: Dongli AI <support@jhcmzy.top>
+  vendor: Dongli AI
+  synopsis: 冻梨AI 桌面工作台
+  description: 把冻梨AI 网页工作台变成 Windows / macOS / Linux 上可长期驻留的桌面应用。
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+  artifactName: dongli-ai-${version}-${arch}.${ext}
