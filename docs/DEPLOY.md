@@ -1,6 +1,6 @@
 # 公开发布与部署
 
-目标：源码在 GitHub 公开；网页端可独立部署；桌面端通过 GitHub Actions 自动构建 Windows / macOS / Linux 安装包；iOS 工程可在 Mac 上直接编译。
+目标：源码在 GitHub 公开；网页端可独立部署；桌面端通过 GitHub Actions 自动构建 Windows / macOS / Linux 安装包；iOS 通过 GitHub Actions 构建未签名 IPA，Mac 上可本地编译并正式签名。
 
 ## 1. 仓库
 
@@ -165,14 +165,28 @@ macOS 正式分发需要 Apple Developer ID 证书、公证和 `APPLE_ID` / `APP
 
 ## 5. iOS
 
+### 5.1 GitHub Actions 生成未签名 IPA
+
+仓库已提供 `.github/workflows/build-ios.yml`，在 macOS runner 上构建并打包未签名 IPA：
+
+1. 打开 Actions → **Build iOS unsigned IPA** → **Run workflow**。
+2. 运行成功后，在该次 run 的 **Artifacts** 下载 `dongli-ios-unsigned`。
+3. 解压得到 `DongliAI-unsigned.ipa`。
+4. 用 Sideloadly / AltStore 选择该 IPA，用自己的 Apple ID 签名后安装到 iPhone。
+5. 免费个人 Apple ID 签名通常 7 天有效；正式分发需要 Apple Developer 账号和 Ad Hoc / App Store 证书。
+
+未签名 IPA 不能直接双击安装，也不能绕过 Apple 的签名校验；它只是把“编译 + 打包”放到 GitHub 的 macOS 机器上完成。
+
+### 5.2 Mac 本地编译与正式签名
+
 1. Mac 安装 Xcode 15+。
 2. 打开 `ios/DongliAI.xcodeproj`。
 3. Target → Signing & Capabilities 选择自己的 Team。
 4. Bundle ID 默认 `top.jhcmzy.dongli.ios`，被占用时改成唯一 ID。
 5. 连接 iPhone，Run；首次麦克风会弹系统授权。
-6. 要 IPA：`Product → Archive → Distribute App`（Development / Ad Hoc / App Store）。
+6. 要正式 IPA：`Product → Archive → Distribute App`（Development / Ad Hoc / App Store）。
 
-Windows 环境无法生成 IPA，也没有 Apple 签名证书；仓库提供的是完整可编译工程源码，不伪造安装包。
+Windows 环境不能编译 iOS，也不能完成 Apple 签名；CI 只能产出未签名包，真机安装仍需自签或开发者证书。
 
 命令行模拟器构建：
 
