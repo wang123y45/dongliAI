@@ -33,7 +33,7 @@ docs/       设计理念与公开发布流程
 - 语音：TTS 回复，多音色、语速设置。
 - 技能：通用、联网搜索、图片理解、写作、总结、翻译、代码、PPT 大纲、数据分析。
 - 账号：注册/登录、HttpOnly 会话、管理员后台；API 地址和模型配置只在后台维护，不在前端暴露。
-- 多端：Windows 安装包、macOS ZIP、Linux 源码启动、Android APK、iOS Xcode 工程。
+- 多端：Windows 安装包、macOS ZIP、Linux 源码启动、Android APK、iOS Xcode 工程与 GitHub Actions 未签名 IPA。
 
 ## 快速启动
 
@@ -88,14 +88,20 @@ macOS 的签名/公证和 Universal 合并应在 macOS 或 GitHub Actions 上完
 
 ### iOS
 
-用 Xcode 15+ 打开 `ios/DongliAI.xcodeproj`：
+仓库提供 `.github/workflows/build-ios.yml`：在 GitHub Actions 的 macOS runner 上构建未签名 IPA。
+
+1. Actions → **Build iOS unsigned IPA** → **Run workflow**。
+2. 运行完成后在该次 run 的 Artifacts 下载 `dongli-ios-unsigned`，解压得到 `DongliAI-unsigned.ipa`。
+3. 用 Sideloadly / AltStore 选择 IPA，以自己的 Apple ID 签名安装；免费账号签名通常 7 天有效。
+
+本地正式签名：用 Xcode 15+ 打开 `ios/DongliAI.xcodeproj`：
 
 1. 选择 `DongliAI` Target → Signing & Capabilities，选择自己的 Team。
 2. Bundle ID 默认 `top.jhcmzy.dongli.ios`；如被占用改成自己的唯一 ID。
 3. 连接 iPhone 真机运行；首次长按麦克风时允许麦克风权限。
-4. 要 IPA：`Product → Archive → Distribute App`。
+4. 要正式 IPA：`Product → Archive → Distribute App`。
 
-工程是原生 WKWebView 壳，复用线上工作台；麦克风、相机、相册用途已在 `Info.plist` 声明。Windows 环境无法编译/签名 iOS，本仓库只提供可在 Mac 上直接打开的完整工程源码。
+工程是原生 WKWebView 壳，复用线上工作台；麦克风、相机、相册用途已在 `Info.plist` 声明。Windows 环境不能编译/签名 iOS；未签名 IPA 不能直接安装，真机仍需自签或开发者证书。
 
 ### Android
 
